@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.board">
+ <select id="selectall" resultType="BoardDTO" parameterType="int">
+<![CDATA[select * from 
+(select rownum rn, level-1 layer, t.*      
+from t_board t
+where rownum<=#{value}*10
+start with t.parentno=0
+connect by prior t.articleno=t.parentno
+order siblings by t.parentno desc, articleno desc)
+where rn >=(#{value}-1)*10+1
+]]>
+      
+<!-- rownum이 글 넘버링, value는 현재 페이지, ex>2페이지 클릭시 value에 2 들어오고 rownum이11부터 20까지로 제한  -->
+<!--자식글이 부모의 articleno과 같을 때 계층 1씩 증가(1씩 증가할수록 자식)  -->
+ </select>
+ <select id="selectPageCnt" resultType="int">
+ select ceil(count(*)/10) from t_board <!-- 게시글(즉 rownum) 10단위로 나누었을 때 페이지 총 갯수-->
+ </select>
+<insert id="insertall" parameterType="BoardDTO">
+ insert into t_board (articleno, parentno, hit, writer, title, content, imagename)
+ values (articlenoseq.nextval,#{parentno},#{hit},#{writer},#{title},#{content},#{imagename})
+</insert>
+<select id="selectDetail" resultType="BoardDTO" parameterType="int">
+ select * from t_board
+ where articleno=#{value} <!-- int타입으로 들어오는 모든 값 DTO의 articleno에 세팅 -->
+</select>
+<delete id="deleteall" parameterType="int">
+ delete from t_board
+ where articleno=#{value}
+</delete>
+<update id="updateall" parameterType="BoardDTO">
+update t_board
+set title=#{title}, content=#{content}, imagename=#{imagename}
+where articleno=#{articleno}
+</update>
+<select id="selectArticleNo" resultType="int">
+select last_number from user_sequences <!--유저의 시퀀스 중 ARTICLENOSEQ의 생성될 시퀀스 넘버(즉, 마지막 넘버는 생성될 시퀀스넘버)를 조회 -->
+where sequence_name='ARTICLENOSEQ' <!-- insert에서 articlenoseq.nextval 과 매핑 -->
+</select>
+<select id="selectViewNo" resultType="int" parameterType="int">
+select nvl(max(hit)+1, 0) from t_board
+where articleno=#{articleno}
+</select>
+<update id="updateViewNo" parameterType="BoardDTO">
+update t_board
+set hit=#{hit}
+where articleno=#{articleno}
+</update>
+<select id="selectImageName" resultType="String" parameterType="int">
+select imagename
+from t_board
+where articleno=#{value}
+</select>
+
+</mapper>

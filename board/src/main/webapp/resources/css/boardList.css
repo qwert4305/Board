@@ -1,0 +1,112 @@
+* {
+	margin: 0 auto;
+	padding: 0;
+	font-size: 13px;
+	font-family: NotoSans-Regular;
+	color: #808080;
+}
+
+a {
+	text-decoration: none;
+}
+
+#wrap {
+	width: 100%;
+	height: auto;
+}
+
+header {
+	width: 960px;
+	height: 50px;
+	margin-top: 100px;
+	text-align: center;
+	color: #808080;
+	font-size: 20px;
+	line-height: 50px;
+}
+
+#search {
+	margin-top: -50px;
+	margin-left: 500px;
+}
+
+#search>input {
+	width: 200px;
+	border: none;
+	border-bottom: solid 1px #808080;
+}
+
+#search>input:focus {
+	border: 0;
+	border-bottom: solid 1px #808080;
+	outline: 0;
+}
+
+#main {
+	margin-top: 50px;
+	width: 100%;
+	height: 500px;
+	background-color: #f6f6f6;
+}
+
+table{
+	text-align: center;
+	padding-top: 25px;
+}
+
+th {
+	width: 200px;
+}
+
+tr{
+    height: 35px;
+}
+
+#title{
+	width:500px
+}
+
+#articleno {
+	width: 50px;
+}
+
+#hit {
+	width: 50px;
+}
+
+#writer{
+	width:100px;
+}
+
+#date{
+	width:100px;
+}
+
+footer {
+	width: auto;
+	height: auto;
+	background-color: #f6f6f6;
+}
+
+#paging {
+	width: 550px;
+	height: 50px;
+	text-align:center;
+	position:relative;
+}
+
+#arrow{
+	margin-left:100px;
+	margin-right:100px;
+	width:8px;
+	height:10px;
+}
+
+#writebtn {
+	font-size:16px;
+	width: 50px;
+	margin-left: 970px;
+	margin-top: -50px;
+	position: absolute;
+	
+}

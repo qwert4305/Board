@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.member">
+<insert id="insertMember" parameterType="MemberDTO">
+insert into t_member 
+(code, id, pw, name
+<if test="phone1!=null and phone1!=''">
+,phone1
+</if>
+<if test="phone2!=null and phone2!=''">
+,phone2
+</if>
+<if test="phone3!=null and phone3!=''">
+,phone3
+</if>
+<if test="tel1!=null and tel1!=''">
+,tel1
+</if>
+<if test="tel2!=null and tel2!=''">
+,tel2
+</if>
+<if test="tel3!=null and tel3!=''">
+,tel3
+</if>
+,joindate
+<if test="email1!=null and email1!=''">
+,email1
+</if><if test="email2!=null and email2!=''">
+,email2
+</if>
+)
+values(memberseq.nextval, #{id}, #{pw}, #{name}
+<if test="phone1!=null and phone1!=''">
+,#{phone1}
+</if>
+<if test="phone2!=null and phone2!=''">
+,#{phone2}
+</if>
+<if test="phone3!=null and phone3!=''">
+,#{phone3}
+</if>
+<if test="tel1!=null and tel1!=''">
+,#{tel1}
+</if>
+<if test="tel2!=null and tel2!=''">
+,#{tel2}
+</if>
+<if test="tel3!=null and tel3!=''">
+,#{tel3}
+</if>
+,sysdate
+<if test="email1!=null and email1!=''">
+,#{email1}
+</if>
+<if test="email2!=null and email2!=''">
+,#{email2}
+</if>
+)
+</insert>
+<select id="selectLogin" resultType="MemberDTO" parameterType="MemberDTO">
+select * from t_member
+where id=#{id} and pw=#{pw}
+</select>
+<select id="idcheck" parameterType="String" resultType="boolean">
+select nvl2((select code from t_member 
+where id=#{value}),1,0)  <!--sql 에서 찾는 id가 null이 아니면 즉 id가 있으면 1, null이면 0 리턴 -->
+from dual
+</select>
+</mapper>
